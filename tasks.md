@@ -8,6 +8,15 @@ was already settled. A cluster moves to the archive whole, once its last step cl
 
 ## Ready
 
+### Reconcile the scope of a kart QR part ID
+`docs/p/index.md` says that one QR ID identifies a **design revision**, so every unit made to that
+revision shares a label. `history.md` (2026-06-14) instead says the motivating use case requires
+an opaque **per-physical-unit** ID so look-alike revisions resolve to different pages. These are
+different data models, and both cannot be the current system. Check `scripts/new_part.py` and the
+actual labels/pages, decide which model serves the kart, then make `docs/p/index.md`, `docs/scan.md`,
+the generator, and the example pages agree. Preserve the historical decision record; append a dated
+correction there if the implementation or interpretation changed.
+
 ### Add a pulldown on CMD_STEER_PWM so a resetting ESP32 cannot drive the steering motor
 On 2026-08-08 the steering swung hard to one lock while the ESP32-S3 was being reflashed and
 broke teeth off the steering gears. The kart was in autonomous at the time. Rubén's reading of
