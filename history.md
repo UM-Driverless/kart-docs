@@ -1008,3 +1008,7 @@ should be confirmed before ordering. Sources: <https://tkart.it/en/magazine/firs
 <https://forums.kartpulse.com/uploads/short-url/q2LkxLOz4d8Akc3W1q68pZDRR2O.pdf>,
 <https://www.agskartparts.com.au/products/456/BRAKE-PAD-SOFT-OTK-BS2>,
 <https://www.kart24.eu/kartshop/bremsen/leitungen-verschraubungen/>.
+
+## 2026-09-19 — Build journey QR in the repository README
+
+Added a clickable QR image to `README.md`, stored at `docs/assets/images/build-journey-qr.png`. It encodes <https://um-driverless.github.io/kart-docs/build-journey/> directly, using a standard QR code with high error correction and a four-module white border. Verified decoding with zxing-cpp at the original 392 px and displayed 244 px sizes. The strict MkDocs build passed.

@@ -7,6 +7,14 @@ Documentation for the autonomous KART project.
 
 Built with [MkDocs](https://www.mkdocs.org/) using the [Material theme](https://squidfunk.github.io/mkdocs-material/).
 
+## Build journey
+
+Scan or click the QR code to follow the [kart's build journey](https://um-driverless.github.io/kart-docs/build-journey/).
+
+<a href="https://um-driverless.github.io/kart-docs/build-journey/">
+  <img src="docs/assets/images/build-journey-qr.png" alt="QR code linking to the kart build journey" width="244" height="244">
+</a>
+
 ---
 
 ## (Beta) Automated Installation
