@@ -1026,3 +1026,15 @@ Live verification after deployment of 0a141e3: the same isolated Chrome check do
 ## 2026-09-19 — Collapsible build journey sharing section
 
 Added a collapsed “Share this page” section before the build journey jump links, reusing `docs/assets/images/build-journey-qr.png`. The strict MkDocs build passed. A headless browser check confirmed the section starts closed, opens on click, and loads the QR image.
+
+## 2026-09-19 — Motor Hall speed explanation
+
+Expanded the existing Medulla firmware page with the path from Hall interrupts to
+locked health snapshots, serial telemetry and dashboard speed. The explanation
+distinguishes ESP32 edge timestamps from the backend packet-arrival clock used by
+the current calculation. It covers measured edges-per-metre calibration, unavailable
+readings, stale timeouts and the display-only limitation, with pinned implementation
+references. Motor-connected validation and the sensor-power isolation arrangement
+remain pending in kart-brain's task board. Both code repositories link back here.
+The strict MkDocs build passed and the rendered section and formula were checked
+in a browser. No firmware, dashboard behavior or calibration was changed.

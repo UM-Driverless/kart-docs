@@ -74,6 +74,7 @@ The tasks are built from components under `components/`:
 |---|---|
 | `km_coms` | UART framed binary protocol to/from the Orin |
 | `km_rtos` | FreeRTOS periodic-task manager |
+| `km_hall` | Interrupt-driven motor Hall states, edge counts and timing diagnostics |
 | `km_pid` | PID controller |
 | `km_sdir` | Steering angle sensor. `km_sdir_pwm` decodes the MT6701's PWM output through MCPWM capture — this is the kart's path. The AS5600 I²C driver in the same component is the classic-board fallback |
 | `km_gpio` | GPIO / ADC / DAC / PWM / I²C hardware abstraction (holds the pin map) |
@@ -81,6 +82,105 @@ The tasks are built from components under `components/`:
 | `km_objects` | Thread-safe shared object store (targets, actuals) |
 | `km_sta` | State machine |
 | `km_gamc` | Gamepad controller (Bluepad32) |
+
+## Motor Hall speed
+
+The ESP32 captures the three motor Hall signals with interrupts. The dashboard
+backend converts the reported edge counts into speed; the firmware does not
+currently calculate speed or use these Halls for actuator control.
+
+Implementation reference: firmware
+[`f4ac188`](https://github.com/UM-Driverless/kart-medulla/tree/f4ac188/components/km_hall)
+and dashboard
+[`6680bce`](https://github.com/UM-Driverless/kart-brain/blob/6680bce/src/kb_dashboard/kb_dashboard/hall_speed.py),
+on their `dev` branches. Motor-connected calibration and on-kart speed validation
+remain pending. A successful bare-board capture initialization does not establish
+that a motor sensor is connected or working.
+
+### From a Hall transition to the speed dial
+
+1. **Signal conditioning.** The three Hall signals pass through the board's U5
+   level shifter before reaching the ESP32's general-purpose input/output (GPIO)
+   pins. Wiring belongs to the [connector pinout](pinout.md); this section describes
+   the software path, not a second pin map.
+2. **Interrupt capture.** Each input is configured to interrupt on both rising and
+   falling edges. The interrupt service routine reads all three states, compares
+   them with the previous observation, and increments a separate counter for each
+   changed input. It records the observation time with `esp_timer_get_time()` in
+   microseconds and the interval since the previous observed change. It neither
+   calculates speed nor transmits serial data. There is no dedicated Hall polling
+   task in FreeRTOS, the real-time operating system.
+3. **Periodic reporting.** The existing health task takes a snapshot protected by
+   the same critical-section lock as the interrupt handler. It appends the Hall
+   fields to `ESP_HEALTH_STATUS` (`0x0B`) and reports roughly once per second.
+   Counts include both edge directions and reset on reboot.
+4. **Backend calculation.** The Robot Operating System 2 (ROS 2) serial receiver
+   forwards the numeric health fields to `/esp32/health/data`. The dashboard
+   backend compares successive counter snapshots and measures elapsed time with
+   its own monotonic clock when packets arrive.
+5. **Display.** The browser converts metres per second to kilometres per hour by
+   multiplying by 3.6. The dial shows speed magnitude, not forward/reverse direction.
+   The System page's Motor Halls card shows raw states, counters, edge rate and scale.
+
+The calculation is:
+
+```text
+delta_edges = delta_Hall1 + delta_Hall2 + delta_Hall3
+speed_m_per_s = delta_edges / elapsed_seconds / hall_edges_per_metre
+```
+
+Counter differences account for unsigned 32-bit wraparound. Backward jumps that
+look like counter resets are rejected instead of becoming a large speed.
+The ESP32's last-edge age and edge interval are diagnostic fields: **the current
+speed calculation does not use those ESP32 timestamps**. Packet transport and
+scheduling delays can therefore affect the displayed rate.
+
+### Calibration
+
+The hardware launch files load `src/kb_dashboard/config/hall_speed.yaml` from
+`kart-brain`. Its `hall_edges_per_metre` default is `0.0`, meaning unknown calibration,
+not a stationary vehicle. Do not substitute an assumed motor pole count, drive
+ratio or tyre circumference.
+
+1. Establish a safe setup with traction and steering actuator power isolated but
+   the ESP32 and Hall sensors powered. The Hall supply and its separation from
+   actuator power have not yet been verified on the motor-connected kart; confirm
+   that wiring before testing. Do not assume disabling a software command isolates
+   power. Keep the drivetrain mechanically engaged so rolling the kart turns the motor.
+2. Check that all three channels count. A multiple-bit change means more than one
+   Hall input changed between observations; investigate any increase in this
+   diagnostic before accepting a calibration measurement.
+   Record the three counters at the start and end of a measured rolling distance,
+   moving in one direction without wheel slip or a board reboot.
+3. Add the three counter increases and divide by the distance in metres. Repeat
+   the measurement to check repeatability. That quotient is `hall_edges_per_metre`.
+4. Set the measured value in the config, rebuild `kb_dashboard` so the installed
+   config is updated, and restart it through a hardware launch file that loads the
+   config, such as `kb_dashboard/launch/dashboard.launch.py`. Compare its indicated speed with
+   distance divided by travel time during a controlled test.
+
+### Validity and limitations
+
+- The display is roughly a one-second average, **not feedback for a fast speed
+  controller**. Using ESP32-side timing for a controller would be a separate change.
+- All three counters must advance in a measurement interval before a speed is
+  shown. Very slow movement may therefore produce no speed reading.
+- No transitions cannot distinguish standstill from disconnected or stuck signals;
+  the dial shows `--`, not a claimed zero. Unknown calibration, capture errors,
+  detected resets and malformed data also suppress the number.
+- A change in the cumulative multiple-bit-change counter suppresses that interval;
+  a later clean interval can recover. Capture samples two GPIO register banks,
+  so the three states are not read simultaneously. The diagnostic catches some
+  ambiguous observations, but it cannot prove no edges were missed. Noise can
+  also add counts; there is no software debounce. Validate capture at operating speed.
+- The backend marks telemetry stale after 2.5 seconds without a health sample.
+  The browser also clears speed on connection loss or after roughly 3 seconds without
+  telemetry. Neither path establishes that the kart has stopped.
+- Hardware mode uses Hall speed without falling back to another speed source.
+  Simulation explicitly keeps its existing external source.
+
+For wire-field definitions and the read-only serial monitor, see the firmware's
+[Motor Hall capture reference](https://github.com/UM-Driverless/kart-medulla/blob/08d70e1/docs/motor-halls.md).
 
 ## Steering PID pipeline
 
