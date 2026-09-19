@@ -1012,3 +1012,11 @@ should be confirmed before ordering. Sources: <https://tkart.it/en/magazine/firs
 ## 2026-09-19 — Build journey QR in the repository README
 
 Added a clickable QR image to `README.md`, stored at `docs/assets/images/build-journey-qr.png`. It encodes <https://um-driverless.github.io/kart-docs/build-journey/> directly, using a standard QR code with high error correction and a four-module white border. Verified decoding with zxing-cpp at the original 392 px and displayed 244 px sizes. The strict MkDocs build passed.
+
+## 2026-09-19 — Build-journey media loading
+
+The live page downloaded 13,079,698 encoded response-body bytes in an isolated Chrome session at 1280×900, measured through five seconds after load. All eight MP4 files were requested before playback. This is one unthrottled run, not a controlled latency benchmark.
+
+The 20 displayed source images totalled 24,154,189 bytes. WebP copies total 3,293,544 bytes (86.4% smaller). Photos use quality 82 and a 1600-pixel maximum side; PNG diagrams and screenshots use lossless compression at original dimensions. Originals remain alongside the derivatives for regeneration and existing direct links. Eight small WebP video posters replace metadata preloading; videos use preload=none and lazy loading. Explicit media dimensions reserve layout space, and the first photo loads eagerly. The script scripts/optimize_journey_media.py regenerates these assets using Pillow and ffmpeg. GitHub Pages remains the host; measure the media reduction before considering migration.
+
+Validation: strict MkDocs build passed; isolated Chrome checks at desktop 1280×900 and mobile 390×844 decoded all 20 images, played all eight videos, and found no initial MP4 requests or horizontal overflow. Photo and rendered diagram previews were inspected. References: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video and https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#webp .

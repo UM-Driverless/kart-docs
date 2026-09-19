@@ -41,7 +41,9 @@ are the ones that went into the post, in order.
    committing.
 2. Video → `docs/build-journey/videos/<slug>.mp4`, referenced as `videos/<slug>.mp4`.
 3. Images → `docs/build-journey/images/<YYYY-MM-DD>-<slug>/`, keeping the source filenames,
-   referenced as `images/<YYYY-MM-DD>-<slug>/<file>{ loading=lazy }`.
+   then run `uv run scripts/optimize_journey_media.py` (requires ffmpeg). It keeps the
+   originals, creates WebP display copies and video posters, and adds image dimensions
+   plus on-demand video loading so new posts do not slow the whole page.
 4. The same post also goes in the **portfolio repo** (`~/repos/portfolio`), which uses absolute
    paths (`/videos/…`, `../images/build-journey/…`) and links the post title to its LinkedIn
    URL. Update the `**Jump to:**` anchor line in both.

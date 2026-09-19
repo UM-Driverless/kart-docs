@@ -106,3 +106,7 @@ own LinkedIn/GitHub via the GitHub "Edit" pencil (git-practice on-ramp); how-to 
 comment, not shown on the page. Lead entry kept modest — shared work (ROS 2, dashboard)
 credited to the people who did it, not the lead.
 
+
+## 2026-09-19 — Reduce build-journey media downloads
+
+Compressed the 20 displayed images from 24,154,189 to 3,293,544 bytes (86.4%); kept original files and lossless diagram pixels. Added eight video posters, on-demand video loading, explicit media dimensions, and a repeatable media script. Strict build passed. Browser checks at 1280px and 390px decoded every image, played all eight videos, and found no initial MP4 requests or horizontal overflow.

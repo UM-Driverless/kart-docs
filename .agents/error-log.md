@@ -102,3 +102,7 @@ Compounding error in the same answer: I treated the compressor MOSFET as the onl
 - Rule: Before any `AskUserQuestion`, name the check that would answer it without asking. If such a check exists and is read-only, run it instead. Asking is for decisions (what should the standard be, is this worth doing), not for facts (what is currently true).
 - Rule: `ssh orin-remote` is a read-only lookup for questions about the kart's live state — which build is flashed, which ports enumerate, what `lsusb` sees. Use it early. Do not stop `kart-brain` or flash anything without asking; listing files and reading `lsusb`/`ls /dev/tty*` needs no permission.
 - Note: the follow-up question in the same session (accept the fitted N16R8 vs keep the N8R2 standard) was a genuine decision and was fine to ask. The failure was specifically asking to confirm an observable fact.
+
+## 2026-09-19 — Browser check assumed a downloaded executable (GPT-6 Astra; gpt-6-astra)
+
+The first Playwright performance check failed because its version-specific Chromium executable was not installed. The check succeeded using channel="chrome" in a separate headless session. Use the installed browser channel for read-only, session-independent checks when bundled Chromium is absent.
