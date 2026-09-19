@@ -1022,3 +1022,7 @@ The 20 displayed source images totalled 24,154,189 bytes. WebP copies total 3,29
 Validation: strict MkDocs build passed; isolated Chrome checks at desktop 1280×900 and mobile 390×844 decoded all 20 images, played all eight videos, and found no initial MP4 requests or horizontal overflow. Photo and rendered diagram previews were inspected. References: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video and https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#webp .
 
 Live verification after deployment of 0a141e3: the same isolated Chrome check downloaded 596,144 bytes versus 13,079,698 before (95.4% fewer bytes), with zero initial MP4 requests. Both samples used a fresh browser at 1280×900 and five seconds after load; transfer reduction is measured, not a claim of equivalent load-time improvement. GitHub Actions run 35439582699 passed build and deployment.
+
+## 2026-09-19 — Collapsible build journey sharing section
+
+Added a collapsed “Share this page” section before the build journey jump links, reusing `docs/assets/images/build-journey-qr.png`. The strict MkDocs build passed. A headless browser check confirmed the section starts closed, opens on click, and loads the QR image.

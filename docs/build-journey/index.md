@@ -4,6 +4,12 @@ Posts documenting the build of a competition kart turned autonomous vehicle. Rou
 
 [Follow on LinkedIn :fontawesome-brands-linkedin:](https://www.linkedin.com/in/rubenayla/){ .md-button }
 
+??? info "Share this page"
+
+    Scan the QR code to open the build journey on another device.
+
+    [![QR code linking to the kart build journey](../assets/images/build-journey-qr.png){ width=244 height=244 }](https://um-driverless.github.io/kart-docs/build-journey/)
+
 **Jump to:** [Intro](#intro) · [Motor](#motor) · [AI Inventory](#inventory-ai) · [Battery](#battery) · [Why 48V](#why-48v) · [Roll hoop](#main-hoop) · [First drive](#first-drive) · [Steering](#steering-actuator) · [Planetary reducer](#planetary-reducer) · [Reducer build](#planetary-build) · [Steering control](#steering-control) · [Dashboard](#dashboard) · [Autonomous drive](#autonomous) · [The PCB](#pcb) · [AS5600 magnet](#as5600-magnet)
 
 ---
