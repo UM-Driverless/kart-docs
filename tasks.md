@@ -6,6 +6,11 @@ to `tasks/done-archive.md`, which holds nothing actionable. Exception: a done st
 still open stays put, since archiving it strips the remaining open step of the context saying what
 was already settled. A cluster moves to the archive whole, once its last step closes.
 
+## In progress
+
+### Reduce build-journey media downloads — Codex
+Measure current loading, compress displayed images, defer videos, and verify the built page.
+
 ## Ready
 
 ### Add a pulldown on CMD_STEER_PWM so a resetting ESP32 cannot drive the steering motor
