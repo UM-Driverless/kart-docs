@@ -421,7 +421,3 @@ The catch is that the AS5600 is designed to work with a *small* diametrically ma
 We would rather have a chip that can take advantage of a strong magnet, so the alignment does not have to be perfect, and one that really does output the angle as PWM. So we have switched to the **MT6701**.
 
 Steering sensor docs: [Angle Sensor](../assembly/steering/sensor/index.md).
-
----
-
-*That's the latest entry. Check back here for the next one.*

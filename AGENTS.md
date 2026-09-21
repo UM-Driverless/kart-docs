@@ -57,9 +57,8 @@ posts. Add its anchor to `**Jump to:**` like any other. Mirror every mini into t
 build journey the same way. Facts in a mini get the same verification bar as a post — check
 numbers against `~/dv/` before publishing them.
 
-The team site's closing line stays neutral and points readers back to the page. Individual entries
-may cite their original posts, but calls to action belong to team channels rather than a member's
-personal profile because this is a shared UM Driverless resource.
+End the team page with its final entry; it needs no closing message or call to action. Individual
+entries may cite their original posts as sources because this is a shared UM Driverless record.
 
 ## Related Repository: `~/dv/` (engineering working notes)
 
