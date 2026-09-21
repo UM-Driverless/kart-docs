@@ -2,8 +2,6 @@
 
 Posts documenting the build of a competition kart turned autonomous vehicle. Roughly one a week. New posts append at the bottom — read straight through.
 
-[Follow on LinkedIn :fontawesome-brands-linkedin:](https://www.linkedin.com/in/rubenayla/){ .md-button }
-
 ??? info "Share this page"
 
     Scan the QR code to open the build journey on another device.
@@ -426,4 +424,4 @@ Steering sensor docs: [Angle Sensor](../assembly/steering/sensor/index.md).
 
 ---
 
-*That's the latest post. New ones land roughly weekly — [follow on LinkedIn](https://www.linkedin.com/in/rubenayla/) to catch them as they ship, or check back here.*
+*That's the latest entry. Check back here for the next one.*

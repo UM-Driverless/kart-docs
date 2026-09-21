@@ -106,3 +106,16 @@ Compounding error in the same answer: I treated the compressor MOSFET as the onl
 ## 2026-09-19 — Browser check assumed a downloaded executable (GPT-6 Astra; gpt-6-astra)
 
 The first Playwright performance check failed because its version-specific Chromium executable was not installed. The check succeeded using channel="chrome" in a separate headless session. Use the installed browser channel for read-only, session-independent checks when bundled Chromium is absent.
+
+## 2026-09-21 — Shared build journey promoted a personal LinkedIn profile (GPT-5.6 Sol; gpt-5.6-sol)
+
+**What happened:** The closing line on the UM Driverless build journey told readers to follow
+Rubén's personal LinkedIn profile. That call to action treated a shared team resource as a personal
+promotion surface.
+
+**Root cause:** The team build journey was mirrored from Rubén's portfolio without separating
+source attribution on individual entries from promotion in the page-wide footer.
+
+**Prevention:** Keep the team site's closing line neutral. Individual entries may link to their
+original publication as a source, while page-wide calls to action point only to team channels or
+back to the shared page.

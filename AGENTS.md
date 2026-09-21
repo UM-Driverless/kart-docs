@@ -57,6 +57,10 @@ posts. Add its anchor to `**Jump to:**` like any other. Mirror every mini into t
 build journey the same way. Facts in a mini get the same verification bar as a post — check
 numbers against `~/dv/` before publishing them.
 
+The team site's closing line stays neutral and points readers back to the page. Individual entries
+may cite their original posts, but calls to action belong to team channels rather than a member's
+personal profile because this is a shared UM Driverless resource.
+
 ## Related Repository: `~/dv/` (engineering working notes)
 
 The team's raw engineering notes, decisions, datasheets, and component data live in a **separate local repo at `~/dv/`** (the "DV" / driverless working repo). This `kart-docs` repo is the *polished, published* documentation; `~/dv/` is where the messy source material and design reasoning accumulate. **Check it before researching or rewriting any subsystem** — the answer (and its history) is usually already there.
