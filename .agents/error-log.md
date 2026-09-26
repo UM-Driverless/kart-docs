@@ -119,3 +119,36 @@ source attribution on individual entries from promotion in the page-wide footer.
 **Prevention:** Keep the team site's closing line neutral. Individual entries may link to their
 original publication as a source, while page-wide calls to action point only to team channels or
 back to the shared page.
+
+## 2026-09-26 — Pneumatic pressure sensor cables swapped between PRESSURE_1 and PRESSURE_2
+**What happened:** The two Festo SDE5 sensor cables were landed on the wrong medulla terminals —
+the tank sensor on `CN7.2` and the piston / regulated-side channel on `CN7.1`. The dashboard's TANK
+dial (which reads `PRESSURE_1`) showed a confident `0.0 bar` while the PISTON dial (`PRESSURE_2`)
+showed ~2.8 bar: the real tank pressure, under the wrong label. It went unnoticed for weeks because
+both channels read plausible numbers, so nothing looked broken — the tank simply appeared empty.
+
+Confirmed by comparing the two channels' signatures over time: on 2026-07-30 `PRESSURE_1` read
+~3.0 bar while `PRESSURE_2` sat at exactly 0 counts / 0 mV; by 2026-09-26 those two signatures had
+traded connectors. An unconnected ADC pad on this board floats to the rail (4095), so a channel
+reading 0 is a connected-but-dead wire, not an open input — which is what pinned the swap rather
+than a failed sensor.
+
+**Root cause was documentation.** The wire list described the two sensors only as "Festo SDE5
+pressure sensor 1" and "sensor 2", and `wiring.md` states "Both sensors share this identical
+pinout" — so nothing in this repo said which physical sensor belongs on which terminal. The only
+record that `PRESSURE_1` is the tank sensor lived in a different repo
+(kart-brain, `src/kb_dashboard/kb_dashboard/protocol.py`). Anyone wiring the kart from kart-docs
+alone had a 50/50 guess.
+
+**Prevention added:**
+- `docs/assembly/electronics/wiring/wiring.yaml`: the `press1` / `press2` device entries now name
+  the tank and the piston (regulated-side) sensor, and the `PRESSURE_1` / `PRESSURE_2` net notes
+  carry the same, so the assignment shows up in the generated wiring table (commit `9583a7f`).
+- Rule: when two devices are the same part with interchangeable cables, the wire list must say
+  which one goes where. "Identical pinout" is a warning sign, not a simplification — a swap
+  between identical parts is silent, because both readings stay plausible.
+
+**Still open, and not caused by the swap:** the SDE5 needs 15–30 V and hangs off the kart's 12 V
+rail; the 12 → 24 V boost is still not fitted, so tank readings are unreliable even on the correct
+terminal. This is what produced the 5.4 bar reading at atmospheric pressure on 2026-07-30. See
+`docs/assembly/pneumatic-braking/bom.md`.
