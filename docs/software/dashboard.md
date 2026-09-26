@@ -102,9 +102,9 @@ The eight mission buttons map to the mission keys in `protocol.py`'s `MISSIONS` 
 
 ### Fixed-throttle operation
 
-The speed-controller choices **Constant Throttle (needs cones)** and **Constant Throttle (blind)** are open-loop throttle commands, not speed regulation. The first holds a fixed throttle while cone detections arrive and commands zero throttle when they stop. The blind mode keeps that fixed throttle with steering centred when cone detections are absent; it is for controlled bench checks of the throttle wiring and ESP32 link. The cone-follower must be launched for either choice to publish commands, so blind mode does not work with `perception:=false`.
+The speed-controller choices **Constant Throttle (needs cones)** and **Constant Throttle (blind)** are open-loop throttle commands, not speed regulation. The first holds a fixed throttle while cone detections arrive and commands zero throttle when it receives an empty detection array or detections time out. The blind mode keeps that fixed throttle with steering centred even when cone detections are absent; it intentionally ignores missing cones, so the driver must supervise it. The cone-follower must be launched for either choice to publish commands, so blind mode does not work with `perception:=false`.
 
-Select the **Auto** mission and press **Start** to enable the autonomous command path. **Stop** commands zero throttle; it does not apply physical braking. If steering is `None`, steering remains unpowered. Use these fixed-throttle modes only in a controlled test setup with the driven wheels clear of the ground.
+Select the **Auto** mission and press **Start** to enable the autonomous command path. **Stop** commands zero throttle; it does not apply physical braking. If steering is `None`, steering remains unpowered.
 
 Only one browser holds the manual-control token at a time; others see who has control and can take it.
 
