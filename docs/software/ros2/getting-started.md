@@ -145,8 +145,10 @@ Once setup is complete, the kart-brain workspace is already built at `~/kart-bra
 Before launching, connect:
 
 1. **ZED camera** — USB 3.0 port
-2. **ESP32 (Kart Medulla)** — USB port (appears as `/dev/ttyACM0`; the S3's WCH CH343 bridge is a CDC-ACM device, not the retired classic board's `/dev/ttyUSB0`)
+2. **ESP32 (Kart Medulla)** — connect the Orin to the ESP32-S3 DevKitC-1 USB-C connector marked **`COM`**. It carries the UART command and telemetry link through the WCH CH343 bridge. The other connector, marked `USB`, is native USB debug and does not carry kart protocol frames. The Orin's persistent device path is `/dev/serial/by-id/usb-1a86_USB_Single_Serial_5C37207028-if00` (also commonly `/dev/ttyACM0`); the retired classic board used `/dev/ttyUSB0`.
 3. **Gamepad** — USB or Bluetooth
+
+If ESP32 telemetry is missing, first check the cable is in `COM`, then check that the persistent device path exists on the Orin. Seeing boot logs on the `USB` connector does not confirm that the kart command and telemetry link is connected.
 
 ### Manual Driving (Teleop)
 

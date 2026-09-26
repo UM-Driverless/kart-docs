@@ -44,8 +44,8 @@ pio device monitor
 pio test -e native
 ```
 
-- **Port:** the S3 enumerates on the Orin as **`/dev/ttyACM0`** — the CH343 is a CDC-ACM device. It is *not* `/dev/ttyUSB0`; that was the classic board's CP2102.
-- **USB bridge:** WCH **CH343** (`lsusb` → `1a86:55d3`, "QinHeng Electronics USB Single Serial"). On macOS the same board appears as `/dev/cu.usbmodem*`. The S3's two USB-C ports are silkscreened `COM` (the bridge) and `USB` (native USB-OTG / USB-Serial-JTAG).
+- **Runtime connection:** plug the Orin into the ESP32-S3 DevKitC-1 connector marked **`COM`**. This is the WCH **CH343** USB-to-UART bridge (`lsusb` → `1a86:55d3`, "QinHeng Electronics USB Single Serial"). Firmware UART0 runs at **115200 baud** on GPIO 43 (TX) and GPIO 44 (RX); this is the framed command and telemetry link. The Orin uses `/dev/serial/by-id/usb-1a86_USB_Single_Serial_5C37207028-if00` so the link does not depend on a changing `/dev/ttyACM*` number. If the dashboard has no ESP32 heartbeat or link rate, check that the cable is in `COM` and that this device exists on the Orin.
+- **The other USB-C connector:** `USB` is the ESP32-S3's native USB-Serial-JTAG interface. It can show boot and debug output, but it does not carry the kart's framed UART protocol. Plugging only this connector in will not restore kart telemetry. The `COM` bridge appears as `/dev/ttyACM0` on the Orin and `/dev/cu.usbmodem*` on macOS; it is not `/dev/ttyUSB0` (the classic board used a CP2102).
 - **Upload baud:** `platformio.ini` sets `upload_speed = 921600` for the S3 env. The old 115200 cap belonged to the *classic* board's CP2102 and does not apply to the CH343 (rated to 6 Mbps). Confirmed on hardware — the 2026-08-10 flash from the Orin wrote 338 kB in 2.6 s, about 1.05 Mbit/s effective, hash verified. If a flash ever fails to connect or fails verification, try 460800, then 115200.
 - **BOOT-button recovery:** if a flash hangs at `Connecting...`, hold **BOOT**, press **EN**, release **BOOT**; press **EN** afterwards to restart if needed.
 
@@ -203,7 +203,7 @@ These are being actively tuned, so read them from `main.c` rather than from any 
 
 ## Orin ↔ ESP32 protocol
 
-The framed binary serial protocol between the Orin and the ESP32 (message types, encoding, CRC) is **not re-specified here** to avoid two copies drifting apart. See the canonical protocol reference on the [ROS 2 packages](../../../software/ros2/packages.md) page. In short: it is a plain **USB serial** link (UART over the USB bridge) — there is no CAN anywhere on the kart.
+The framed binary serial protocol between the Orin and the ESP32 (message types, encoding, CRC) is **not re-specified here** to avoid two copies drifting apart. See the canonical protocol reference on the [ROS 2 packages](../../../software/ros2/packages.md) page. On the installed board, the Orin reaches UART0 over the `COM` connector's CH343 USB-to-UART bridge; the `USB` connector is a separate native debug interface. There is no CAN anywhere on the kart.
 
 ## Comms-loss watchdog (safety-relevant)
 
