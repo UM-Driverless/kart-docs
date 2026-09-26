@@ -1038,3 +1038,8 @@ references. Motor-connected validation and the sensor-power isolation arrangemen
 remain pending in kart-brain's task board. Both code repositories link back here.
 The strict MkDocs build passed and the rendered section and formula were checked
 in a browser. No firmware, dashboard behavior or calibration was changed.
+
+
+## 2026-09-26 — Pinout table uses one row per terminal
+
+Synced the connector reference from dv-hardware commit f31aee8. The assignment table now lists all 30 terminals separately, with board labels and individual functions; circuit explanations sit below it. Validation: strict MkDocs build passed, source sync check passed, and headless Chrome confirmed 30 rows with no table overflow at viewport widths of 1440, 1024 and 390 pixels. Visually reviewed the desktop rendering.

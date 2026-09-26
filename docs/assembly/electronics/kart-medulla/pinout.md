@@ -1,12 +1,12 @@
-<!-- sync_pinout source-sha256: 6edbe79727ad71578f9ef2a5ec249d2aaae38d0cb6f04686c4482914842b524a -->
-<!-- sync_pinout source-commit: e4a6e109c3efa613601a6cc6cac4784cd8e1b7db -->
+<!-- sync_pinout source-sha256: e3cf840001fb978ac21ac25462cb68c74e256adfe43e7e5a1b7ba8f94789611b -->
+<!-- sync_pinout source-commit: f31aee8909ad7d7e10c654b739ed06bc67a11c0a -->
 !!! info "Generated page — edit it in `dv-hardware`, not here"
-    This is a verbatim copy of [`projects/kart-medulla/docs/pinout-cn-connectors.md`](https://github.com/UM-Driverless/dv-hardware/blob/e4a6e109c3efa613601a6cc6cac4784cd8e1b7db/projects/kart-medulla/docs/pinout-cn-connectors.md) in the **dv-hardware**
+    This is a verbatim copy of [`projects/kart-medulla/docs/pinout-cn-connectors.md`](https://github.com/UM-Driverless/dv-hardware/blob/f31aee8909ad7d7e10c654b739ed06bc67a11c0a/projects/kart-medulla/docs/pinout-cn-connectors.md) in the **dv-hardware**
     repo, which holds the KiCad schematic that defines these assignments. Changes
     made here are overwritten. To update: edit the file in dv-hardware, then run
     `uv run python scripts/sync_pinout.py` in kart-docs and commit the result.
 
-    Pinned to dv-hardware commit [`e4a6e109c3ef`](https://github.com/UM-Driverless/dv-hardware/commit/e4a6e109c3efa613601a6cc6cac4784cd8e1b7db) (2026-08-10). The link above is a permalink to that exact revision, so it keeps meaning what it meant when this copy was made; dv-hardware may have newer commits.
+    Pinned to dv-hardware commit [`f31aee8909ad`](https://github.com/UM-Driverless/dv-hardware/commit/f31aee8909ad7d7e10c654b739ed06bc67a11c0a) (2026-09-26). The link above is a permalink to that exact revision, so it keeps meaning what it meant when this copy was made; dv-hardware may have newer commits.
 
     Related: [Kart Medulla board](index.md) · [whole-kart wire list](../wiring.md#wire-list-whole-kart)
     · ESP32-S3 GPIO map in dv-hardware's `pinout-esp32-s3.md`.
@@ -73,18 +73,61 @@ CN1        CN2        CN3        CN4       CN5        CN6        CN7        CN8 
 
 ## Assignment table
 
-| CN | Side | Pin 1 | Pin 2 | Pin 3 | Function |
-|---|---|---|---|---|---|
-| **CN1**  | R, bottom | +3V3 | +12V | GND | **Power input + 3V3 export.** Pin 1 exports the ESP32-derived +3V3 rail (carries PWR_FLAG). Pin 2 = +12V from kart battery. Pin 3 = GND return. |
-| **CN2**  | R         | MOTOR_HALL_3 (5V) | MOTOR_HALL_2 (5V) | +5V_REG | Motor hall sensors 2 & 3. Pin 3 supplies +5V from the on-board rail to the hall sensor IC. |
-| **CN3**  | R         | EXP_P1 | EXP_P2 | EXP_P3 | Three PCF8574 expander GPIOs clustered next to U25 (PCF8574 placed on the right side of the PCB near CN3 — see `history.md` 2026-05-08 for the cluster decision). |
-| **CN4**  | R         | SCL (I²C, 3V3) | SDA (I²C, 3V3) | REVERSE_WIRE | Pins 1 & 2 = I²C bus to the AS5600 steering encoder *and* to U25 (PCF8574); U25 is the only on-PCB I²C device, AS5600 lives off-board on the steering shaft. Pin 3 = REVERSE_WIRE (PCF8574 P0 open-drain output to kart's REVERSE line, wired-OR with manual reverse button on the motor-controller side). |
-| **CN5**  | R, top    | HYDRAULIC_2 (0–5V) | CMD_STEER_PWM_IN (ex-PRESSURE_3) | EXP_P4 | Hydraulic-2 pressure sensor + steering-angle PWM input + spare PCF8574 expander GPIO P4. **Pin 2 is silkscreened `PRES3` but is NOT a pressure sensor** — no pressure sensor is fitted there; GPIO 1 was repurposed 2026-07-31 to read the MT6701 steering-angle sensor's PWM output via MCPWM capture. See "As-built pin use — board `84d6dd0`" in `pinout-esp32-s3.md`. |
-| **CN6**  | L, top    | PEDAL_BRAKE (0–5V) | PEDAL_ACC (0–5V) | +3V3 | Both pedal-position signals + 3V3 power output to whichever sensor needs it. (Carries PWR_FLAG on +3V3.) |
-| **CN7**  | L         | PRESSURE_1 (0–10V) | PRESSURE_2 (0–10V) | MOTOR_HALL_1 (5V) | Pressure-1 & Pressure-2 sensors + Motor hall 1. (Halls span CN2 + CN7 because GPIO 16 sits on the left side of the ESP32; see `history.md` 2026-05-08 for why no swap.) |
-| **CN8**  | L         | SDC_IN_LOW_SIDE | `BUZZ` **(old name)** = CMD_COMPRESSOR_PWM (3V3) | CMD_STEER_DIR (3V3) | Pin 1 = SDC chain return (Q3 drain). **Pin 2 is silkscreened `BUZZ` but is NOT a buzzer** — the net was repurposed to drive the EBS compressor MOSFET's gate (GPIO 3). It carries a 3.3 V logic signal, not power: the compressor MOSFET is external, added after the board was built, and this pin feeds its gate resistor. Pin 3 = Cytron H-bridge direction. |
-| **CN9**  | L         | CMD_STEER_PWM (3V3) | HYDRAULIC_1 (0–5V) | GND | Pin 1 = Cytron H-bridge PWM. Pin 2 = Hydraulic-1 sensor. Pin 3 = GND return for the left-side analog/SDC group. |
-| **CN10** | L, bottom | CMD_ACC (0–5V) | CMD_PRES (0–10V) | GND | Pin 1 = throttle command, to the motor controller: MCP4922 VOUTA (0–3.3 V) goes through the LM358 U1B non-inverting stage (gain 1.51, set by R37 5.1K / R38 10K, giving 4.99 V full scale) straight to CN10.1. Nothing is muxed on this path — the MAX4660 (U14) that used to sit here has been deleted from the schematic; the panel DPDT switch on the kart, downstream of this board, is what selects whether the motor controller listens to this command or to the driver's pedal. Pin 2 = **pressure command to the Festo VPPM proportional regulator, not to the motor controller** — braking on this kart is pneumatic. It is VOUTB amplified ×3 by the LM358 (U1A) (R19 = 2K, R20 = 1K), so 9.9 V leaves the board, not 10 V exactly, since the DAC's full scale is 3.3 V rather than 5 V — the MCP4922 U13 was moved from +5V to +3V3 on 2026-08-01 (commit 16a35fb) to fix an SPI logic-threshold problem. The net was called `CMD_BRAKE` until 2026-07-31; it is `CMD_PRES__0_10V` now, because the signal is a pressure setpoint for a proportional regulator rather than a brake-force command. The silkscreen on the built board still reads `CMD_BRK`. Pin 3 = GND, and it is also the **return the VPPM's setpoint is measured against**: the valve runs from a separate 24 V supply, so that supply's 0 V must be common with the medulla's GND or the commanded pressure shifts by whatever the offset is. |
+Each row is one independent terminal. `CN5.2` means connector CN5, pin 2.
+The three pins in a connector do **not** imply a shared device or cable.
+“Board label” is the text printed on the built board; the function describes its current use.
+
+| Terminal | Board label | Signal and function |
+|---|---|---|
+| **CN1.1** | `+3V3` | `+3V3` — 3.3 V supply output from the ESP32 module. |
+| **CN1.2** | `+12V` | `+12V` — 12 V supply input from the kart battery. |
+| **CN1.3** | `GND` | `GND` — Ground return. |
+| **CN2.1** | `HALL3` | `MOTOR_HALL_3` — Motor Hall sensor 3 input, 5 V. |
+| **CN2.2** | `HALL2` | `MOTOR_HALL_2` — Motor Hall sensor 2 input, 5 V. |
+| **CN2.3** | `+5V` | `+5V_REG` — 5 V rail for the motor Hall sensors. |
+| **CN3.1** | `EXP_P1` | `EXP_P1` — PCF8574 expander pin P1. |
+| **CN3.2** | `EXP_P2` | `EXP_P2` — PCF8574 expander pin P2. |
+| **CN3.3** | `EXP_P3` | `EXP_P3` — PCF8574 expander pin P3. |
+| **CN4.1** | `SCL` | `SCL` — I²C (Inter-Integrated Circuit) clock, 3.3 V. |
+| **CN4.2** | `SDA` | `SDA` — I²C data, 3.3 V. |
+| **CN4.3** | `REV` | `REVERSE_WIRE` — Reverse command from PCF8574 P0; open-drain output shared with the manual reverse button. |
+| **CN5.1** | `HYD2` | `HYDRAULIC_2` — Hydraulic pressure sensor 2 input, 0–5 V. |
+| **CN5.2** | `PRES3` | `CMD_STEER_PWM_IN` — MT6701 steering-angle input, pulse-width modulation (PWM). Repurposed pressure input; no pressure sensor here. |
+| **CN5.3** | `EXP_P4` | `EXP_P4` — Spare PCF8574 expander pin P4. |
+| **CN6.1** | `PED_BRK` | `PEDAL_BRAKE` — Brake pedal position input, 0–5 V. |
+| **CN6.2** | `PED_ACC` | `PEDAL_ACC` — Accelerator pedal position input, 0–5 V. |
+| **CN6.3** | `+3V3` | `+3V3` — 3.3 V supply output from the ESP32 module. |
+| **CN7.1** | `PRES1` | `PRESSURE_1` — Pneumatic pressure sensor 1 input, 0–10 V through a divider. |
+| **CN7.2** | `PRES2` | `PRESSURE_2` — Pneumatic pressure sensor 2 input, 0–10 V through a divider. |
+| **CN7.3** | `HALL1` | `MOTOR_HALL_1` — Motor Hall sensor 1 input, 5 V. |
+| **CN8.1** | `SDC` | `SDC_IN_LOW_SIDE` — Shutdown circuit (SDC) return, connected to Q3 drain. See voltage reference below. |
+| **CN8.2** | `BUZZ` | `CMD_COMPRESSOR_PWM` — 3.3 V command to the external compressor transistor gate; not a buzzer or compressor power supply. |
+| **CN8.3** | `STEER_DIR` | `CMD_STEER_DIR` — Cytron steering H-bridge direction output, 3.3 V. |
+| **CN9.1** | `STEER_PWM` | `CMD_STEER_PWM` — Cytron steering H-bridge PWM output, 3.3 V. |
+| **CN9.2** | `HYD1` | `HYDRAULIC_1` — Hydraulic pressure sensor 1 input, 0–5 V. |
+| **CN9.3** | `GND` | `GND` — Ground return. |
+| **CN10.1** | `CMD_ACC` | `CMD_ACC` — Throttle command to the motor controller, nominal 0–5 V. |
+| **CN10.2** | `CMD_BRK` | `CMD_PRES` — Pressure setpoint for the Festo VPPM regulator, nominal 0–10 V. See output circuit notes below. |
+| **CN10.3** | `GND` | `GND` — Ground return and reference for the VPPM setpoint; common with the 24 V supply’s 0 V. |
+
+### Bus and sensor connections
+
+CN4.1 and CN4.2 expose the bus shared with the on-board PCF8574 (U25). The
+AS5600 connection used these bus lines; the MT6701 steering-angle PWM input is
+CN5.2. CN4.3 is an independent reverse command.
+
+CN5.2 is silkscreened `PRES3`, but its current use is steering-angle capture on
+ESP32 GPIO 1. See “As-built pin use — board `84d6dd0`” in `pinout-esp32-s3.md`.
+CN8.2 is silkscreened `BUZZ`, but GPIO 3 drives the gate resistor of the external
+compressor MOSFET (metal-oxide-semiconductor field-effect transistor).
+
+### Output circuit notes (CN10)
+
+Pin 1 = throttle command, to the motor controller: MCP4922 VOUTA (0–3.3 V) goes through the LM358 U1B non-inverting stage (gain 1.51, set by R37 5.1K / R38 10K, giving 4.99 V full scale) straight to CN10.1. Nothing is muxed on this path — the MAX4660 (U14) that used to sit here has been deleted from the schematic; the panel DPDT switch on the kart, downstream of this board, is what selects whether the motor controller listens to this command or to the driver's pedal.
+
+Pin 2 = **pressure command to the Festo VPPM proportional regulator, not to the motor controller** — braking on this kart is pneumatic. It is VOUTB amplified ×3 by the LM358 (U1A) (R19 = 2K, R20 = 1K), so 9.9 V leaves the board, not 10 V exactly, since the DAC's full scale is 3.3 V rather than 5 V — the MCP4922 U13 was moved from +5V to +3V3 on 2026-08-01 (commit 16a35fb) to fix an SPI logic-threshold problem. The net was called `CMD_BRAKE` until 2026-07-31; it is `CMD_PRES__0_10V` now, because the signal is a pressure setpoint for a proportional regulator rather than a brake-force command. The silkscreen on the built board still reads `CMD_BRK`.
+
+Pin 3 = GND, and it is also the **return the VPPM's setpoint is measured against**: the valve runs from a separate 24 V supply, so that supply's 0 V must be common with the medulla's GND or the commanded pressure shifts by whatever the offset is.
 
 ## The pneumatic side — three devices, three supplies, only one of them on a medulla pin
 
