@@ -63,8 +63,8 @@ devices:
   ebs_coil:       {desc: "Festo EBS solenoid coil (VUVS, form C)", pins: [a, b]}
   compressor_fet: {desc: "EBS air-compressor MOSFET (low side)", pins: [gate, drain, source]}
   compressor:     {desc: "Air-compressor motor (~7.4 V)", pins: [pos, neg]}
-  press1:         {desc: "Festo SDE5 pressure sensor 1", vendor: festo, pins: [supply, gnd, out]}
-  press2:         {desc: "Festo SDE5 pressure sensor 2", vendor: festo, pins: [supply, gnd, out]}
+  press1:         {desc: "Festo SDE5 pressure sensor 1 — tank side", vendor: festo, pins: [supply, gnd, out]}
+  press2:         {desc: "Festo SDE5 pressure sensor 2 — piston (regulated side)", vendor: festo, pins: [supply, gnd, out]}
   hyd1:           {desc: "Hydraulic pressure sensor 1 (planned — not yet installed)", pins: [sig, supply, gnd]}
   hyd2:           {desc: "Hydraulic pressure sensor 2 (planned — not yet installed)", pins: [sig, supply, gnd]}
   kill1:          {desc: "Kill switch 1", pins: [a, b]}
@@ -124,8 +124,8 @@ nets:
   - {name: EBS_COIL,           system: Brake, class: power, voltage: "12V", pins: [sdc_relay.no3, ebs_coil.a], note: "12 V gated by the SDC relay; Festo form-C connector"}
 
   # --- sensors ---
-  - {name: PRESSURE_1,  system: Sensors, class: signal, voltage: "0–10V", color: black, pins: [press1.out, medulla.CN7.1], note: "Festo EN 60947-5-2: black = signal"}
-  - {name: PRESSURE_2,  system: Sensors, class: signal, voltage: "0–10V", color: black, pins: [press2.out, medulla.CN7.2], note: "Festo EN 60947-5-2: black = signal"}
+  - {name: PRESSURE_1,  system: Sensors, class: signal, voltage: "0–10V", color: black, pins: [press1.out, medulla.CN7.1], note: "**Tank** sensor. Festo EN 60947-5-2: black = signal"}
+  - {name: PRESSURE_2,  system: Sensors, class: signal, voltage: "0–10V", color: black, pins: [press2.out, medulla.CN7.2], note: "**Piston** (regulated-side) sensor. Festo EN 60947-5-2: black = signal"}
   - {name: HYDRAULIC_1, system: Sensors, class: signal, voltage: "3.3V", status: planned, pins: [hyd1.sig, medulla.CN9.2], note: "Terminal reserved; hydraulic sensor not installed yet"}
   - {name: HYDRAULIC_2, system: Sensors, class: signal, voltage: "3.3V", status: planned, pins: [hyd2.sig, medulla.CN5.1], note: "Terminal reserved; hydraulic sensor not installed yet"}
   - {name: MOTOR_HALL_1, system: Sensors, class: signal, voltage: "5V", pins: [motor.hall1, medulla.CN7.3], note: "Level-shifted to 3.3 V on PCB"}
