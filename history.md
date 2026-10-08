@@ -1043,3 +1043,8 @@ in a browser. No firmware, dashboard behavior or calibration was changed.
 ## 2026-09-26 — Pinout table uses one row per terminal
 
 Synced the connector reference from dv-hardware commit f31aee8. The assignment table now lists all 30 terminals separately, with board labels and individual functions; circuit explanations sit below it. Validation: strict MkDocs build passed, source sync check passed, and headless Chrome confirmed 30 rows with no table overflow at viewport widths of 1440, 1024 and 390 pixels. Visually reviewed the desktop rendering.
+
+
+## 2026-10-08 — Rear-wheel diameter for speed conversion
+
+Rubén Jiménez Mejías confirmed the driven-wheel diameter as 11 inches. The chassis page now records 0.2794 m diameter and the calculated nominal circumference of π × 0.2794 = 0.8777609874 m, distinguishing this from a measured loaded rolling circumference. Motor pole count and installed sprocket tooth counts remain unconfirmed and are not assigned values. No speed-calibration setting was changed.

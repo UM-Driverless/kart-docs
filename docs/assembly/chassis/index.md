@@ -14,7 +14,10 @@ Based on the frame markings (`TONY KART EXTREME`, `CIK ICA 330/99`), the chassis
 
 ## Wheels
 
-- **Outer diameter:** 11 in (≈ 27.9 cm), measured on the kart on 2026-10-08.
+- **Outer diameter:** 11 in (0.2794 m), confirmed on the kart on 2026-10-08.
+- **Nominal circumference:** 0.877761 m (`π × 0.2794`). A measured loaded rolling circumference has not yet been recorded.
+
+Multiply driven-wheel revolutions per second by 0.877761 to obtain metres per second, or by 3.159940 to obtain kilometres per hour. Converting motor Hall edges to wheel revolutions additionally requires either a measured edge count per wheel turn or confirmed motor and chain-reduction parameters; see [Motor Hall speed](../electronics/kart-medulla/firmware.md#motor-hall-speed).
 
 ## Setup Reference
 
