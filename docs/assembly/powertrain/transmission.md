@@ -30,7 +30,7 @@ The kart currently uses a **standard 219 pitch karting transmission system**. Th
 - **Type:** Custom 219 pitch sprocket
 - **Manufacturing:** Laser cut (custom design)
 - **Material:** Steel
-- **Teeth:** Multiple options manufactured with different tooth counts
+- **Teeth:** **10 teeth installed**, confirmed by Rubén Jiménez Mejías on 2026-10-08.
 - **Special features:** Custom design for non-standard Chinese motor shaft
 
 ---

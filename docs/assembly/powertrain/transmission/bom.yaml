@@ -53,6 +53,7 @@ components:
         notes: "Custom design for 10mm shaft"
     specifications:
       pitch: "219"
+      teeth: 10
       shaft_diameter: "10mm"
       material: "steel"
       manufacturing: "laser_cut"

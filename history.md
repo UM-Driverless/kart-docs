@@ -1048,3 +1048,8 @@ Synced the connector reference from dv-hardware commit f31aee8. The assignment t
 ## 2026-10-08 — Rear-wheel diameter for speed conversion
 
 Rubén Jiménez Mejías confirmed the driven-wheel diameter as 11 inches. The chassis page now records 0.2794 m diameter and the calculated nominal circumference of π × 0.2794 = 0.8777609874 m, distinguishing this from a measured loaded rolling circumference. Motor pole count and installed sprocket tooth counts remain unconfirmed and are not assigned values. No speed-calibration setting was changed.
+
+
+## 2026-10-08 — Installed traction pinion confirmed
+
+Rubén Jiménez Mejías confirmed that the installed custom #219 motor pinion has **10 teeth**. Updated the transmission page and its bill of materials. The installed rear crown tooth count remains unconfirmed, so the chain reduction remains unspecified; it is rear teeth divided by 10.
