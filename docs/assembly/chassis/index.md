@@ -12,6 +12,10 @@ Based on the frame markings (`TONY KART EXTREME`, `CIK ICA 330/99`), the chassis
 
 ![Chassis ID](../../assets/images/chassis-id.jpg)
 
+## Wheels
+
+- **Outer diameter:** 11 in (≈ 27.9 cm), measured on the kart on 2026-10-08.
+
 ## Setup Reference
 
 ### Tire Pressure
