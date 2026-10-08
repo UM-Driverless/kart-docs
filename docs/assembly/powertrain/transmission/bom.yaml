@@ -35,9 +35,10 @@ components:
         verified: true
     specifications:
       pitch: "219"
+      teeth: 76
       material: "aluminum"
       color: "black"
-    notes: "Current sprocket damaged due to incompatible chain use"
+    notes: "Current sprocket damaged due to incompatible chain use; select 76 teeth when ordering a replacement"
 
   - id: "custom_219_pinion"
     part_number: "CUSTOM-219-PINION"

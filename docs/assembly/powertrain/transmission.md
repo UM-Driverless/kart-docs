@@ -21,10 +21,10 @@ The kart currently uses a **standard 219 pitch karting transmission system**. Th
 #### Rear Sprocket (Corona)
 - **Type:** Aluminum 219 pitch sprocket
 - **Color:** Black anodized
-- **Teeth:** *(Check sprocket for exact number)*
+- **Teeth:** **76 teeth installed**, confirmed from the crown marking by Rubén Jiménez Mejías on 2026-10-08.
 - **Status:** **Damaged - needs replacement** (~20€)
 - **Damage cause:** Used incorrectly with T8F chain (incompatible pitch)
-- **Replacement link:** <a href="https://kpsracing.es/coronas/5957-9775-corona-aluminio-219-negra.html" target="_blank">219 Aluminum Sprocket at KPS Racing</a>
+- **Replacement link:** <a href="https://kpsracing.es/coronas/5957-9775-corona-aluminio-219-negra.html" target="_blank">219 Aluminum Sprocket at KPS Racing</a> — select **76 teeth**.
 
 #### Front Sprocket (Piñón)
 - **Type:** Custom 219 pitch sprocket
@@ -32,6 +32,10 @@ The kart currently uses a **standard 219 pitch karting transmission system**. Th
 - **Material:** Steel
 - **Teeth:** **10 teeth installed**, confirmed by Rubén Jiménez Mejías on 2026-10-08.
 - **Special features:** Custom design for non-standard Chinese motor shaft
+
+### Installed reduction
+
+The fitted **76-tooth rear crown** and **10-tooth motor pinion** give a reduction of **76 / 10 = 7.6:1**: the motor makes 7.6 revolutions for each rear-axle and driven-wheel revolution.
 
 ---
 
@@ -147,7 +151,6 @@ With the motor mount moved slightly backward (compared to the original 3D-printe
 
 ## Future Improvements
 
-- Document exact tooth counts for ratio calculations
 - Add chain tensioning procedure
 - Include maintenance schedule
 - Calculate speed/torque ratios for different sprocket combinations

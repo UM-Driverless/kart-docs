@@ -1053,3 +1053,8 @@ Rubén Jiménez Mejías confirmed the driven-wheel diameter as 11 inches. The ch
 ## 2026-10-08 — Installed traction pinion confirmed
 
 Rubén Jiménez Mejías confirmed that the installed custom #219 motor pinion has **10 teeth**. Updated the transmission page and its bill of materials. The installed rear crown tooth count remains unconfirmed, so the chain reduction remains unspecified; it is rear teeth divided by 10.
+
+
+## 2026-10-08 — Installed rear crown and chain reduction confirmed
+
+Rubén Jiménez Mejías read **76 teeth** from the marking on the installed rear crown. Together with the confirmed 10-tooth motor pinion, this establishes a **7.6:1** chain reduction: 7.6 motor revolutions per rear-axle revolution. Updated the transmission page, transmission bill of materials, and powertrain overview. The replacement-product link is accompanied by an instruction to select 76 teeth. Motor Hall pulses per revolution remain unconfirmed; no software calibration was changed.

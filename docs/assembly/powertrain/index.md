@@ -29,7 +29,7 @@ The powertrain assembly converts electrical energy into motion, consisting of th
 ## Key Specifications
 - **Power**: 3000W maximum
 - **Operating Voltage**: 72V (motor), 5V (throttle)
-- **Transmission Ratio**: Variable (depending on sprocket selection)
+- **Transmission Ratio**: 7.6:1 (76-tooth rear crown / 10-tooth motor pinion)
 - **Chain Pitch**: 219 (7.774mm)
 
 ## Maintenance
